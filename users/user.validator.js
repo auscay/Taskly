@@ -1,9 +1,11 @@
 const joi = require('joi')
 
-const validateUserCreationJoi = async  (req, res, next) => {
+const signupValidation = async  (req, res, next) => {
     try {
         const bodyOfRequest = req.body
         const schema = joi.object({
+            first_name: joi.string().required(),
+            last_name: joi.string().required(),           
             email: joi.string().email().required(),
             password: joi.string().pattern(new RegExp('^[a-zA-Z0-9@#]{3,30}$')).required(),
             created_at: joi.date().default(Date.now),
@@ -37,4 +39,4 @@ const LoginValidation = async (req, res, next) => {
     }
 }
 
-module.exports = { validateUserCreationJoi, LoginValidation }
+module.exports = { signupValidation, LoginValidation }
