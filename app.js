@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv')
 const rateLimit = require('express-rate-limit')
 const { connectToMongoDB } = require('./db')
+const userRoute = require('./users/user.router')
 const PORT = process.env.PORT
 
 
@@ -12,6 +13,10 @@ dotenv.config()
 connectToMongoDB()
 
 const app = express()
+
+//  Set ejs as templating engine
+app.set("view engine", "ejs");
+app.set("views", "views");
 
 // Configure rate limiter
 
@@ -28,8 +33,23 @@ app.use(express.json())
 app.use(limiter)
 
 app.get("/", (req, res) => {
-    res.send("Welcome To Taskly!")
+    res.render('index', {
+        message: 'Welcome To Taskly'
+    })
+}) 
+
+// Signup and Login Route
+app.get("/signup", (req, res) => {
+    res.render('signup')
 })
+
+app.get("/login", (req, res) => {
+    res.render('login')
+})
+
+app.post("/signup", userRoute)
+
+app.post("/login", userRoute)
 
 app.listen(PORT, ()=> {
     console.log(`Server started on PORT: http://localhost:${PORT}`);
