@@ -26,11 +26,7 @@ const CreateUser = async (req, res) => {
     
         const token = await jwt.sign({ email: user.email, _id: user._id}, process.env.JWT_SECRET)
     
-        return res.status(201).json({
-            message: 'User created successfully',
-            user,
-            token
-        }) 
+        return res.status(201).redirect('/login')
         
     } catch (error) {
         return res.status(500).json({
@@ -69,11 +65,13 @@ const Login = async (req, res) => {
             { expiresIn: '1h' })
     
         console.log('[CreateUser] => login process done')
-        return res.status(200).json({
-            message: 'Login successful',
-            user,
-            token
-         })
+
+        // Store user in session
+        req.session.user = user;
+        req.session.token = token;
+        
+        // Return JSON response with redirect URL
+        return res.status(200).redirect('/dashboard')
     } catch (error) {
         console.log(error.message);
         return res.status(500).json({

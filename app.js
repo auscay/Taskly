@@ -1,11 +1,10 @@
 const express = require("express")
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const dotenv = require('dotenv')
 const rateLimit = require('express-rate-limit')
 const { connectToMongoDB } = require('./db')
 const userRoute = require('./users/user.router')
-const PORT = process.env.PORT
-
 
 dotenv.config()
 
@@ -30,6 +29,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.json())
 
+app.use(session({
+    secret: process.env.SESSION_SECRET, // Use a strong secret key
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
+}));
+
 app.use(limiter)
 
 app.get("/", (req, res) => {
@@ -51,6 +57,7 @@ app.post("/signup", userRoute)
 
 app.post("/login", userRoute)
 
-app.listen(PORT, ()=> {
-    console.log(`Server started on PORT: http://localhost:${PORT}`);
-})
+// User dashboard
+app.get("/dashboard", userRoute)
+
+module.exports = app
