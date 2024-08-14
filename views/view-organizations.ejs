@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Organization</title>
+</head>
+<body>
+    <h1><%= user.first_name %> <%= user.last_name %> you belong to the following organizations</h1>
+    <br><br>
+    <% if (organizations.length > 0) { %>
+        <ul>
+            <% organizations.forEach(organization => { %>
+                <li>
+                    <strong>Title:</strong> <%= organization.title %><br>
+                    <strong>Created At:</strong> <%= organization.createdAt %><br>
+                    <a href="/organization/<%= organization._id %>">View Details</a>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>You have not created any organizations yet.</p>
+    <% } %>
+    <button><a href="/create-organization">Create New Organization</a></button>
+    
+    
+</body>
+</html>

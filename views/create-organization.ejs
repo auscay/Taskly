@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Organization</title>
+</head>
+<body>
+   <h1>You can create a new Organization and add people to it.</h1>
+   
+   <form action="/create-organization" method="post">
+        <label for="owner">Owner:</label>
+        <input type="text" value="<%= user._id %>" name="owner" readonly>
+        <br><br>
+        <label for="title">Title:</label>
+        <input type="text" placeholder="Enter a title for your organization" name="title">
+        <br><br>
+        <label for="board">Board(1-5)</label>
+        <input type="number" min="0" max="5" placeholder="You can create up to 5 boards" name="board"><br><br>
+        <input type="submit" value="Create Organization">
+   </form>
+</body>
+</html>
