@@ -6,6 +6,7 @@ const rateLimit = require('express-rate-limit')
 const { connectToMongoDB } = require('./db')
 const userRoute = require('./users/user.router')
 const organizationRoute = require('./organization/organization.router')
+const boardRouter = require('./board/board.router')
 
 dotenv.config()
 
@@ -34,7 +35,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET, // Use a strong secret key
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Set to true if using HTTPS
+    cookie: { secure: true } // Set to true if using HTTPS
 }));
 
 app.use(limiter)
@@ -64,5 +65,8 @@ app.get("/view-organizations", organizationRoute)
 app.get("/create-organization", organizationRoute) 
 // Create Organization
 app.post("/create-organization", organizationRoute)
+
+// Use the board router
+app.use('/boards', boardRouter);
 
 module.exports = app

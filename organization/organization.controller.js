@@ -8,7 +8,8 @@ const createOrganization = async (req, res) => {
 
         // Check for existing organization title
         const existingOrganizationTitle = await OrganizationModel.findOne({
-            title: bodyOfRequest.title
+            title: bodyOfRequest.title,
+            owner: req.session.user._id  // Filter by the logged-in user's ID
         });
 
         console.log('Existing organization check complete.');

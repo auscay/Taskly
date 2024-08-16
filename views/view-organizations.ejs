@@ -14,7 +14,8 @@
                 <li>
                     <strong>Title:</strong> <%= organization.title %><br>
                     <strong>Created At:</strong> <%= organization.createdAt %><br>
-                    <a href="/organization/<%= organization._id %>">View Details</a>
+                    <a href="/boards/view-boards/<%= organization._id %>">View Boards</a>
+                    <a href="/boards/create-board %>">Create Boards</a>
                 </li>
             <% }) %>
         </ul>

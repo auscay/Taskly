@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Board</title>
+    <!-- Link to any CSS files here -->
+</head>
+<body>
+    <h1>Create a New Board</h1>
+
+    <!-- Displaying error messages if any -->
+    <% if (message) { %>
+        <div style="color: red;">
+            <p><%= message %></p>
+        </div>
+    <% } %>
+
+    <!-- Form to create a new board -->
+    <form action="/boards/create-board" method="POST">
+        <div>
+            <label for="name">Board Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div>
+            <label for="organization">Select Organization:</label>
+            <select id="organization" name="organization" required>
+                <!-- Populate this dropdown with organizations from the database -->
+                <% organizations.forEach(function(org) { %>
+                    <option value="<%= org._id %>"><%= org.title %></option>
+                <% }); %>
+            </select>
+        </div>
+
+        <button type="submit">Create Board</button>
+    </form>
+</body>
+</html>
