@@ -1,3 +1,4 @@
+const { json } = require('body-parser');
 const User = require('../models/User')
 const jwt = require('jsonwebtoken');
 
@@ -69,9 +70,19 @@ const Login = async (req, res) => {
         // Store user in session
         req.session.user = user;
         req.session.token = token;
+
+        req.session.save((err) => {
+            if (err) {
+                return res.status(500).send('Session save error');
+            }
+            return res.status(200).redirect('/dashboard');
+        });
         
         // Return JSON response with redirect URL
-        return res.status(200).redirect('/dashboard')
+        // return res.status(200).redirect('/dashboard')
+        // return res.json({
+        //     message: 'I am here'
+        // })
     } catch (error) {
         console.log(error.message);
         return res.status(500).json({

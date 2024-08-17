@@ -58,7 +58,7 @@ app.post("/signup", userRoute)
 app.post("/login", userRoute)
 
 // User dashboard
-app.get("/dashboard", userRoute)
+app.use("/dashboard", userRoute)
 
 // View Organizations
 app.get("/view-organizations", organizationRouter)
