@@ -5,7 +5,7 @@ const dotenv = require('dotenv')
 const rateLimit = require('express-rate-limit')
 const { connectToMongoDB } = require('./db')
 const userRoute = require('./users/user.router')
-const organizationRoute = require('./organization/organization.router')
+const organizationRouter = require('./organization/organization.router')
 const boardRouter = require('./board/board.router')
 
 dotenv.config()
@@ -25,6 +25,7 @@ const limiter = rateLimit({
 	windowMs: 1 * 60 * 1000, // 1 minute
 	limit: 10, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
 	standardHeaders: 'draft-7', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+    validate: {xForwardedForHeader: false}
 })
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -65,6 +66,9 @@ app.get("/view-organizations", organizationRoute)
 app.get("/create-organization", organizationRoute) 
 // Create Organization
 app.post("/create-organization", organizationRoute)
+
+// Use the organization
+app.use('/organization', organizationRouter)
 
 // Use the board router
 app.use('/boards', boardRouter);
