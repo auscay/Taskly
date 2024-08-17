@@ -61,14 +61,14 @@ app.post("/login", userRoute)
 app.get("/dashboard", userRoute)
 
 // View Organizations
-app.get("/view-organizations", organizationRoute)
+app.get("/view-organizations", organizationRouter)
 // Display Create Organization Form
-app.get("/create-organization", organizationRoute) 
+app.get("/create-organization", organizationRouter) 
 // Create Organization
-app.post("/create-organization", organizationRoute)
+app.post("/create-organization", organizationRouter)
 
 // Use the organization
-app.use('/organization', organizationRouter)
+// app.use('/organization', organizationRouter)
 
 // Use the board router
 app.use('/boards', boardRouter);
