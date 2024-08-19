@@ -65,7 +65,7 @@ const Login = async (req, res) => {
             process.env.JWT_SECRET, 
             { expiresIn: '1h' })
     
-        console.log('[CreateUser] => login process done')
+        console.log(`${user.email} => successfully logged in`)
 
         // Store user in session
         req.session.user = user;
@@ -78,11 +78,6 @@ const Login = async (req, res) => {
             return res.status(200).redirect('/dashboard');
         });
         
-        // Return JSON response with redirect URL
-        // return res.status(200).redirect('/dashboard')
-        // return res.json({
-        //     message: 'I am here'
-        // })
     } catch (error) {
         console.log(error.message);
         return res.status(500).json({

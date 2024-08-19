@@ -61,8 +61,10 @@ const viewBoards = async (req, res) => {
         // Fetch boards for the specified organization and the logged-in user
         const boards = await BoardModel.find({
             organization: organizationId,
-            owner: req.session.user._id
+            // owner: req.session.user._id
         });
+        
+        
 
         if (!boards || boards.length === 0) {
             return res.status(404).json({
