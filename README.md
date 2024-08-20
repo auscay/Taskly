@@ -38,5 +38,20 @@ Taskly is a robust task management system designed to streamline project managem
    ```bash
    cd Taskly
 
+3. **Install dependencies**:
+   ```bash
+   npm install
+
+4. **Set up environment variables**:
+   ```bash
+   JWT_SECRET=your_jwt_secret
+   MONGO_DB_CONNECTION_URL=your_mongodb_connection_url
+   PORT=your_desired_port_number
+   SESSION_SECRET=your_session_secret
+
+
+5. **Run the application**:
+   ```bash
+   node server.js
 
 
