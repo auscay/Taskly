@@ -43,7 +43,8 @@ Taskly is a robust task management system designed to streamline project managem
    npm install
 
 4. **Set up environment variables**:
-   ***Create a .env file in the root directory with the following variables:***
+
+   **Create a `.env` file in the root directory with the following variables:** 
    ```bash
    JWT_SECRET=your_jwt_secret
    MONGO_DB_CONNECTION_URL=your_mongodb_connection_url
