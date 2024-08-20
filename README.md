@@ -33,3 +33,10 @@ Taskly is a robust task management system designed to streamline project managem
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/auscay/Taskly.git
+
+2. **Navigate to the project directory**:
+   ```bash
+   cd Taskly
+
+
+
