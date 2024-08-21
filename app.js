@@ -36,7 +36,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET, // Use a strong secret key
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Set to true if using HTTPS
+    cookie: { secure: true } // Set to true if using HTTPS
 }));
 
 app.use(limiter)
@@ -47,18 +47,8 @@ app.get("/", (req, res) => {
     })
 }) 
 
-// Signup and Login Route
-app.get("/signup", (req, res) => {
-    res.render('signup')
-})
-app.get("/login", (req, res) => {
-    res.render('login')
-})
-app.post("/signup", userRoute)
-app.post("/login", userRoute)
-
-// User dashboard
-app.use("/dashboard", userRoute)
+// User Route
+app.use('/user', userRoute)
 
 // View Organizations
 app.get("/view-organizations", organizationRouter)

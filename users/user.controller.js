@@ -27,7 +27,7 @@ const CreateUser = async (req, res) => {
     
         const token = await jwt.sign({ email: user.email, _id: user._id}, process.env.JWT_SECRET)
     
-        return res.status(201).redirect('/login')
+        return res.status(201).redirect('/user/login')
         
     } catch (error) {
         return res.status(500).json({
@@ -36,6 +36,10 @@ const CreateUser = async (req, res) => {
         })
     }
 
+}
+
+const viewLogin = async (req, res) => {
+    res.render('login')
 }
 
 const Login = async (req, res) => {
@@ -75,7 +79,7 @@ const Login = async (req, res) => {
             if (err) {
                 return res.status(500).send('Session save error');
             }
-            return res.status(200).redirect('/dashboard');
+            return res.status(200).redirect(`/user/dashboard/${user._id}`);
         });
         
     } catch (error) {
@@ -87,7 +91,32 @@ const Login = async (req, res) => {
     }
 }
 
+const Logout = async (req, res) => {
+    if (req.session && req.session.user) {
+        const userEmail = req.session.user.email;
+        
+        // Log the user's email
+        console.log(`${userEmail} => successfully logged out`);
+
+        // Destroy the session
+        req.session.destroy((err) => {
+            if (err) {
+                console.log('Error destroying session:', err);
+                return res.status(500).redirect(`/user/dashboard/${req.session.user._id}`);
+            }
+
+            // Redirect to the login page after logout
+            return res.redirect('/user/login');
+        });
+    } else {
+        // If no user is logged in, redirect to the login page
+        return res.redirect('/user/login');
+    }
+};
+
 module.exports = {
     CreateUser,
-    Login
+    viewLogin,
+    Login,
+    Logout
 }
