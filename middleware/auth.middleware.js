@@ -4,7 +4,7 @@ const ensureAuthenticated = (req, res, next) => {
         return next();
     } else {
         // User is not authenticated, redirect to login or send unauthorized response
-        return res.status(401).redirect('/login'); // Redirect to login page
+        return res.send('Session not set').status(401).redirect('/user/login'); // Redirect to login page
     }
 };
 
