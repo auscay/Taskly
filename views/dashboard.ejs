@@ -31,6 +31,6 @@
     </div>    
     <h1>Welcome <%= user.first_name %> <%= user.last_name %>!</h1>
     <p>This is your dashboard.</p>
-    <button><a href="/view-organizations">View Organization</a></button>
+    <button><a href="/organization/view-organizations/<%= user._id %>">View Organization</a></button>
 </body>
 </html>

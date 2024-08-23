@@ -79,7 +79,7 @@ const viewBoards = async (req, res) => {
             user: req.session.user // Pass the user object for display in the view
         });
     } catch (error) {
-        console.error('Error fetching boards:', error.message);
+        console.log('Error fetching boards:', error.message);
         return res.status(500).json({
             message: 'Server Error',
             success: false,

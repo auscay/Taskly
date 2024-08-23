@@ -36,7 +36,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET, // Use a strong secret key
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true } // Set to true if using HTTPS
+    cookie: { secure: false } // Set to true if using HTTPS
 }));
 
 app.use(limiter)
@@ -51,14 +51,14 @@ app.get("/", (req, res) => {
 app.use('/user', userRoute)
 
 // View Organizations
-app.get("/view-organizations", organizationRouter)
-// Display Create Organization Form
-app.get("/create-organization", organizationRouter) 
-// Create Organization
-app.post("/create-organization", organizationRouter)
+// app.get("/view-organizations", organizationRouter)
+// // Display Create Organization Form
+// app.get("/create-organization", organizationRouter) 
+// // Create Organization
+// app.post("/create-organization", organizationRouter)
 
 // Use the organization
-// app.use('/organization', organizationRouter)
+app.use('/organization', organizationRouter)
 
 // Use the board router
 app.use('/boards', boardRouter);

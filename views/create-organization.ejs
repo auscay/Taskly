@@ -8,7 +8,7 @@
 <body>
    <h1>You can create a new Organization and add people to it.</h1>
    
-   <form action="/create-organization" method="post">
+   <form action="/organization/create-organization" method="post">
         <label for="owner">Owner:</label>
         <input type="text" value="<%= user._id %>" name="owner" readonly>
         <br><br>
