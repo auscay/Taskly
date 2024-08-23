@@ -50,13 +50,6 @@ app.get("/", (req, res) => {
 // User Route
 app.use('/user', userRoute)
 
-// View Organizations
-// app.get("/view-organizations", organizationRouter)
-// // Display Create Organization Form
-// app.get("/create-organization", organizationRouter) 
-// // Create Organization
-// app.post("/create-organization", organizationRouter)
-
 // Use the organization
 app.use('/organization', organizationRouter)
 

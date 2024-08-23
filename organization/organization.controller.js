@@ -59,11 +59,8 @@ const createOrganization = async (req, res) => {
         });
 
         console.log('Organization created successfully.');
-        // return res.status(201).json({
-        //     message: `${organization.title} Organization created successfully`,
-        //     data: organization
-        // });
-        return res.status(201).redirect(`/organizations/view-organization/${organization.owner}`)
+
+        return res.status(201).redirect(`/organization/view-organizations/${organization.owner}`)
     } catch (error) {
         console.log('Error during organization creation:', error.message);
         return res.status(500).json({
