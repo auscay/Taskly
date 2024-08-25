@@ -1,6 +1,7 @@
 const express = require("express")
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const methodOverride = require('method-override');
 const dotenv = require('dotenv')
 const rateLimit = require('express-rate-limit')
 const { connectToMongoDB } = require('./db')
@@ -40,6 +41,9 @@ app.use(session({
 }));
 
 app.use(limiter)
+
+// Use method-override to handle DELETE and PUT methods in forms
+app.use(methodOverride('_method'));
 
 app.get("/", (req, res) => {
     res.render('index', {

@@ -8,15 +8,13 @@ const router = express.Router();
 // Route to view all organizations created by the logged-in user
 router.get('/view-organizations/:userID', ensureAuthenticated, organizationController.viewOrganizations)
 
-router.get('/create-organization', (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login'); // Redirect to login if no user session
-    }
-
-    res.render('create-organization', { user: req.session.user })
-})
+// Show create organization
+router.get('/create-organization', ensureAuthenticated, organizationController.showCreateOrganizationForm);
 
 // Create organization
 router.post('/create-organization', ensureAuthenticated, organizationCreationValidator, organizationController.createOrganization)
+
+// Delete organization by ID
+router.delete('/delete-organization/:id', ensureAuthenticated, organizationController.deleteOrganization);
 
 module.exports = router
