@@ -12,6 +12,8 @@ router.get('/logout', ensureAuthenticated, controller.Logout)
 
 router.get('/login', controller.viewLogin)
 
+router.get('/signup', controller.viewSignup)
+
 // router.get('/', ensureAuthenticated, (req, res) => {
 //     // Render the dashboard view with user data
 //     res.render('dashboard', { user: req.session.user });

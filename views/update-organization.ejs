@@ -1,0 +1,11 @@
+<!-- update-organization.ejs -->
+<form action="/organization/update-organization/<%= organization._id %>?_method=PUT" method="POST">
+    <label for="owner">Owner:</label>
+    <input type="text" value="<%= user._id %>" name="owner" readonly>
+    <br><br>
+
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" value="<%= organization.title %>" required>
+
+    <button type="submit">Update Organization</button>
+</form>

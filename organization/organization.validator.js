@@ -22,4 +22,22 @@ const organizationCreationValidator = async (req, res, next) => {
     }
 }
 
-module.exports = organizationCreationValidator
+const organizationUpdateValidator = async (req, res, next) => {
+    try {
+        const bodyOfRequest = req.body
+        const schema = joi.object({
+            owner: joi.string().pattern(/^[0-9a-fA-F]{24}$/),
+            title: joi.string().max(20).min(3),
+        })
+
+        await schema.validateAsync(bodyOfRequest, { abortEarly: true })
+        next()
+    } catch (error) {
+        return res.status(422).json({
+            message: error.message,
+            success: false
+        })
+    }
+}
+
+module.exports = { organizationCreationValidator, organizationUpdateValidator }

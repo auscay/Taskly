@@ -26,6 +26,8 @@ const CreateUser = async (req, res) => {
         });
     
         const token = await jwt.sign({ email: user.email, _id: user._id}, process.env.JWT_SECRET)
+
+        console.log(`${user.email} => successfully signed up`)
     
         return res.status(201).redirect('/user/login')
         
@@ -42,9 +44,13 @@ const viewLogin = async (req, res) => {
     res.render('login')
 }
 
+const viewSignup = async (req, res) => {
+    res.render('signup')
+}
+
 const Login = async (req, res) => {
     try {
-        console.log('[CreateUser] => login process started')
+        console.log('Login process started')
         const userFromRequest = req.body
     
         const user = await User.findOne({
@@ -117,6 +123,7 @@ const Logout = async (req, res) => {
 module.exports = {
     CreateUser,
     viewLogin,
+    viewSignup,
     Login,
     Logout
 }

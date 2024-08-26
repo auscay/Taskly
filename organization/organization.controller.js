@@ -3,27 +3,32 @@ const UserModel = require('../models/User')
 
 const viewOrganizations = async (req, res) => {
     try {
-        const { userID } = req.params
+        const userID = req.session.user._id; // Use session user ID directly
+
         // Fetch organizations for the logged-in user
         const organizations = await OrganizationModel.find({
             owner: userID
-        })
+        });
+
         if (!organizations || organizations.length === 0) {
-            return res.status(404).json({
-                message: 'No Organization found for this user',
-                success: false
+            // Render a message or a page stating no organizations found
+            return res.render('view-organizations', {
+                success: true,
+                organizations: [],
+                user: req.session.user,
+                message: 'No organizations found.'
             });
         }
+
         return res.status(200).render('view-organizations', {
             success: true,
             organizations,
             user: req.session.user
-        })
+        });
     } catch (error) {
         console.log('Error fetching Organizations:', error.message);
         return res.status(500).json({
             message: 'Server Error',
-            success: false,
             error: error.message
         });   
     }
@@ -111,4 +116,72 @@ const deleteOrganization = async (req, res) => {
     }
 };
 
-module.exports = { createOrganization, viewOrganizations, showCreateOrganizationForm, deleteOrganization }
+// View update organization form
+const viewUpdateOrganizationForm = async (req, res) => {
+    try {
+        const organizationId = req.params.id;
+        const organization = await OrganizationModel.findById(organizationId);
+        const user = req.session.user;
+
+        if (!organization) {
+            return res.status(404).json({
+                message: 'Organization not found',
+            });
+        }
+
+        res.render('update-organization', { organization, user });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Server Error',
+            error: error.message,
+        });
+    }
+};
+
+const updateOrganization = async (req, res) => {
+    try {
+        const organizationId = req.params.id; // Get organization ID from the request parameters
+        const updatedData = req.body; // Get the updated data from the request body
+        const loggedInUserId = req.session.user._id; // Get the logged-in user's ID from the session
+
+        // Find the organization by ID
+        const organization = await OrganizationModel.findById(organizationId);
+
+        // If the organization doesn't exist
+        if (!organization) {
+            return res.status(404).json({
+                message: 'Organization not found',
+            });
+        }
+
+        // Check if the logged-in user is the owner of the organization
+        if (organization.owner.toString() !== loggedInUserId.toString()) {
+            return res.status(403).json({
+                message: 'You are not authorized to update this organization',
+            });
+        }
+
+        // Update the organization with the new data
+        const updatedOrganization = await OrganizationModel.findByIdAndUpdate(
+            organizationId,
+            updatedData,
+            { new: true, runValidators: true } // Return the updated document and run validation
+        );
+
+        // Respond with the updated organization details
+        return res.status(200).redirect(`/organization/view-organizations/${loggedInUserId}`)
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Server Error',
+            error: error.message,
+        });
+    }
+};
+module.exports = { 
+    createOrganization,
+    viewOrganizations, 
+    showCreateOrganizationForm, 
+    deleteOrganization, 
+    viewUpdateOrganizationForm,
+    updateOrganization
+ }
