@@ -1,0 +1,11 @@
+<!-- update-board.ejs -->
+<form action="/board/update-board/<%= board._id %>?_method=PUT" method="POST">
+    <label for="owner">Owner:</label>
+    <input type="text" value="<%= user._id %>" name="owner" readonly>
+    <br><br>
+
+    <label for="name">Board Name:</label>
+    <input type="text" id="title" name="name" value="<%= board.name %>" required>
+
+    <button type="submit">Update Board</button>
+</form>

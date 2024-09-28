@@ -101,4 +101,47 @@ const showCreateBoardForm = async (req, res) => {
     }
 };
 
-module.exports = { createBoard, viewBoards, showCreateBoardForm }
+// Show the form to update existing board
+const viewUpdateBoardForm = async (req, res) => {
+    try {
+        const { boardID } = req.params;
+
+        // Find the board by ID
+        const board = await BoardModel.findById(boardID).populate('organization');
+
+        if (!board) {
+            return res.status(404).json({
+                message: 'Board not found',
+                success: false
+            });
+        }
+
+        // Ensure the logged-in user is the owner of the organization
+        if (board.organization.owner.toString() !== req.session.user._id.toString()) {
+            return res.status(403).json({
+                message: 'You are not authorized to update this board',
+                success: false
+            });
+        }
+
+        // Render the update board form
+        return res.status(200).render('update-board', {
+            success: true,
+            board,
+            user: req.session.user
+        });
+    } catch (error) {
+        console.log('Error fetching board for update:', error.message);
+        return res.status(500).json({
+            message: 'Server Error',
+            success: false,
+            error: error.message
+        });
+    }
+}
+
+module.exports = { createBoard,
+                   viewBoards, 
+                   showCreateBoardForm,
+                   viewUpdateBoardForm
+                 }

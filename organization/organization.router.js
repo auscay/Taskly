@@ -14,7 +14,7 @@ router.get('/create-organization', ensureAuthenticated, organizationController.s
 // Create organization
 router.post('/create-organization', ensureAuthenticated, organizationCreationValidator, organizationController.createOrganization)
 
-// Get Update organization by ID form
+// Get Update organization form by ID 
 router.get('/update-organization/:id', ensureAuthenticated, organizationController.viewUpdateOrganizationForm);
 
 // Update organization by ID
