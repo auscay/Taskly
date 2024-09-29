@@ -12,10 +12,13 @@ const createBoard = async (req, res, next) => {
         });
 
         if (!organization) {
-            return res.status(404).json({
+            // return res.status(404).json({
+            //     message: 'Organization not found or you do not have permission to add boards to this organization',
+            //     success: false
+            // });
+            return res.status(404).render('create-board', {
                 message: 'Organization not found or you do not have permission to add boards to this organization',
-                success: false
-            });
+            })
         }
 
         // Check if a board with the same name already exists within the organization
@@ -25,10 +28,17 @@ const createBoard = async (req, res, next) => {
         });
 
         if (existingBoard) {
-            return res.status(409).json({
+            // return res.status(409).json({
+            //     message: 'A board with this name already exists in your organization',
+            //     success: false
+            // });
+        // Fetch organizations that the logged-in user owns
+        const organizations = await OrganizationModel.find({ owner: req.session.user._id });
+            return res.status(404).render('create-board', {
                 message: 'A board with this name already exists in your organization',
-                success: false
-            });
+                success: false,
+                organizations
+            })
         }
 
         // Create a new board
@@ -39,11 +49,19 @@ const createBoard = async (req, res, next) => {
 
         await newBoard.save();
 
-        return res.status(201).json({
+        // return res.status(201).json({
+        //     message: 'Board created successfully',
+        //     success: true,
+        //     data: newBoard
+        // });
+        // Fetch organizations that the logged-in user owns
+        const organizations = await OrganizationModel.find({ owner: req.session.user._id });
+        return res.status(201).render('create-board', {
             message: 'Board created successfully',
             success: true,
-            data: newBoard
-        });
+            data: newBoard,
+            organizations
+        })
     } catch (error) {
         console.error('Error creating board:', error.message);
         return res.status(500).json({
@@ -95,7 +113,11 @@ const showCreateBoardForm = async (req, res) => {
         const organizations = await OrganizationModel.find({ owner: req.session.user._id });
 
         // Render the form and pass the organizations to the view
-        res.render('create-board', { organizations, message: null });
+        res.render('create-board', { 
+            organizations,
+            message: null,
+            success: ''
+            });
     } catch (error) {
         res.status(500).send('Server Error');
     }

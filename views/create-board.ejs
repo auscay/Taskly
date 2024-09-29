@@ -10,8 +10,15 @@
     <h1>Create a New Board</h1>
 
     <!-- Displaying error messages if any -->
-    <% if (message) { %>
+    <% if (message && success === false) { %>
         <div style="color: red;">
+            <p><%= message %></p>
+        </div>
+    <% } %>
+
+    <!-- Displaying error messages if any -->
+    <% if (success === true) { %>
+        <div style="color: green;">
             <p><%= message %></p>
         </div>
     <% } %>
