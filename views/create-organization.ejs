@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Organization</title>
+    <style>
+        .error-message {
+            color: red; /* Style to display the error message in red */
+        }
+    </style>
 </head>
 <body>
    <h1>You can create a new Organization and add people to it.</h1>
+
+   <!-- Display the error message if it exists -->
+   <% if (message) { %>
+    <div class="error-message">
+        <p><%= message %></p>
+    </div>
+    <% } %>
    
    <form action="/organization/create-organization" method="post">
         <label for="owner">Owner:</label>

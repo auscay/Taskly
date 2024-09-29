@@ -40,14 +40,14 @@ const showCreateOrganizationForm = async (req, res) => {
         return res.redirect('/login'); // Redirect to login if no user session
     }
 
-    res.render('create-organization', { user: req.session.user });
+    res.render('create-organization', { user: req.session.user, message: "" });
 }
 
 const createOrganization = async (req, res) => {
     try {
         const bodyOfRequest = req.body;
         
-        console.log('Checking for existing organization title...');
+        // console.log('Checking for existing organization title...');
 
         // Check for existing organization title
         const existingOrganizationTitle = await OrganizationModel.findOne({
@@ -59,9 +59,13 @@ const createOrganization = async (req, res) => {
 
         if (existingOrganizationTitle) {
             console.log('Organization title already exists.');
-            return res.status(409).json({
-                message: 'Organization title already exists',
-            });
+            // return res.status(409).json({
+            //     message: 'Organization title already exists',
+            // });
+            return res.status(409).render('create-organization', {
+                user: req.session.user,
+                message: 'Organization title already exists'
+            })
         }
 
         // Create Organization

@@ -8,13 +8,13 @@ const router = express.Router();
 // Route to view all organizations created by the logged-in user
 router.get('/view-organizations/:userID', ensureAuthenticated, organizationController.viewOrganizations)
 
-// Show create organization
+// Show create organization form
 router.get('/create-organization', ensureAuthenticated, organizationController.showCreateOrganizationForm);
 
 // Create organization
 router.post('/create-organization', ensureAuthenticated, organizationCreationValidator, organizationController.createOrganization)
 
-// Get Update organization form by ID 
+// Show Update organization form by ID 
 router.get('/update-organization/:id', ensureAuthenticated, organizationController.viewUpdateOrganizationForm);
 
 // Update organization by ID
