@@ -1,6 +1,5 @@
 const express = require('express')
 const ensureAuthenticated = require('../middleware/auth.middleware')
-const BoardModel = require('../models/Board')
 const boardCreationValidator = require('./board.validator')
 const boardController = require('./board.controller')
 
@@ -17,5 +16,11 @@ router.get('/create-board', ensureAuthenticated, boardController.showCreateBoard
 
 // Get update board by ID form
 router.get('/update-board/:boardId', ensureAuthenticated, boardController.viewUpdateBoardForm )
+
+// Route to update a board by ID
+router.put('/update-board/:boardId', ensureAuthenticated, boardController.updateBoard);
+
+// Route to delete a board by ID
+router.delete('/delete-board/:boardId', ensureAuthenticated, boardController.deleteBoard);
 
 module.exports = router
