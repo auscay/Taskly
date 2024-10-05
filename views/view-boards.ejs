@@ -11,7 +11,11 @@
     
     <ul>
         <% boards.forEach(board => { %>
-            <li><%= board.name %></li>
+            <li><%= board.name %></li><a href="/boards/update-board/<%= board._id %>"><button>Update Board</button>
+                <!-- Delete Button -->
+                <form action="/boards/delete-board/<%= board._id %>?_method=DELETE" method="POST" style="display:inline;">
+                    <button type="submit">Delete Board</button>
+                </form>
         <% }) %>
     </ul>
 </body>

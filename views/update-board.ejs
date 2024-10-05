@@ -1,5 +1,5 @@
 <!-- update-board.ejs -->
-<form action="/board/update-board/<%= board._id %>?_method=PUT" method="POST">
+<form action="/boards/update-board/<%= board._id %>?_method=PUT" method="POST">
     <label for="owner">Owner:</label>
     <input type="text" value="<%= user._id %>" name="owner" readonly>
     <br><br>
